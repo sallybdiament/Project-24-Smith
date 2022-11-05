@@ -1,4 +1,4 @@
-import { RowDataPacket, ResultSetHeader } from 'mysql2';
+import { ResultSetHeader, RowDataPacket } from 'mysql2/promise';
 import mysql from './connection';
 import { IProduct } from '../interfaces/IProducts';
 
@@ -19,7 +19,9 @@ export default class ProductModel {
     const { name, amount } = product;
     console.log(product);
     const result = await this.connection.execute<ResultSetHeader>(
-      'INSERT INTO users (name, amount) VALUES (?, ?)',
+      `
+      INSERT INTO Trybesmith.Products (name, amount) VALUES (?, ?)
+`,
       [name, amount],
     );
     const [dataInserted] = result;
