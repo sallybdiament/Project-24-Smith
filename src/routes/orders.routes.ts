@@ -6,6 +6,6 @@ const router = Router();
 
 const ordersController = new OrdersController(); // INSTANCIAR
 
-router.post('/', ordersController.getAll.bind(ordersController));
+router.get('/', ordersController.getAll.bind(ordersController));
 
 export default router;
