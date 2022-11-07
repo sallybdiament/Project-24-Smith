@@ -1,3 +1,5 @@
 export interface IToken {
-  token: string;
+  type: number;
+  message?: string;
+  token?: string;
 }

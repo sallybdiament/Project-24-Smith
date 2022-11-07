@@ -12,20 +12,17 @@ export default class UserService {
 
   public async login(loginBody: ILogin) {
     const newProductSchema = Joi.object({
-      username: Joi.string().required()
-        .messages({ 
-          'string.base': '"username" should be a type of \'text\'',
-          'string.empty': '"username" is required',
-          'any.required': '"username" is a required field' }),
-      password: Joi.string().required()
-        .messages({ 
-          'string.base': '"password" should be a type of \'text\'',
-          'string.empty': '"password" is required',
-          'any.required': '"password" is a required field' }),
-    });
+      username: Joi.string().required(),
+      password: Joi.string().required(),  
+    }).messages({ 
+      'string.base': '{{#label}} should be a type of \'text\'',
+      'string.empty': '{{#label}} is required',
+      'any.required': '{{#label}} is required' });
+
     const { error } = newProductSchema.validate(loginBody);
     if (error) return { type: 400, message: error.details[0].message };
     const user = await this.user.getUserByUsernameAndPassword(loginBody);
+
     if (user.length === 0) { return { type: 401, message: 'Username or password invalid' }; }
     return { type: 200, token: this.generateToken(user[0]) };
   }
