@@ -8,8 +8,8 @@ export default class UserController {
   async login(req: Request<object, object, ILogin>, res: Response) {
     const { body } = req;
     
-    const token = await this.userService.login(body);
-
-    return res.status(200).json({ token });
+    const result = await this.userService.login(body);
+    if (result.token) { return res.status(200).json({ token: result.token }); }
+    return res.status(result.type).json({ message: result.message });
   }
 }
