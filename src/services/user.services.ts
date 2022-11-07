@@ -26,6 +26,7 @@ export default class UserService {
   }
 
   public create(userData: IUser): Promise<IUser> {
-    return this.user.create(userData);
+    const newCreatedUser = this.user.create(userData);
+    return newCreatedUser;
   }
 }
