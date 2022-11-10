@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+// import { IUser } from '../interfaces/IUser';
 import UserService from '../services/user.services';
 
 export default class UserController {
@@ -7,7 +8,6 @@ export default class UserController {
   async create(req: Request, res: Response) {
     const newUser = req.body;
     const newUserCreated = await this.userService.create(newUser);
-    const token = { token: this.userService.generateToken(newUserCreated) };
-    res.status(201).json(token);
+    return res.status(201).json({ token: this.userService.generateToken(newUserCreated) });
   }
 }

@@ -1,9 +1,12 @@
+import jsonwebtoken from 'jsonwebtoken';
 import Joi from 'joi';
 // import { IMessage } from '../interfaces/IMessage';
-import jsonwebtoken from 'jsonwebtoken';
 import { IUser } from '../interfaces/IUser';
 import UserModel from '../models/user.model';
 import { ILogin } from '../interfaces/ILogin';
+
+const messageIsRequired = '400 | {{#label}} is required';
+const messageIsString = '422 | {{#label}} must be a string';
 
 export default class UserService {
   public user = new UserModel(); // atributo
@@ -11,15 +14,15 @@ export default class UserService {
   public jwt = jsonwebtoken;
 
   public async login(loginBody: ILogin) {
-    const newProductSchema = Joi.object({
+    const newUserSchema = Joi.object({
       username: Joi.string().required(),
       password: Joi.string().required(),  
     }).messages({ 
-      'string.base': '{{#label}} should be a type of \'text\'',
-      'string.empty': '{{#label}} is required',
-      'any.required': '{{#label}} is required' });
+      'string.base': messageIsString,
+      'string.empty': messageIsRequired,
+      'any.required': messageIsRequired });
 
-    const { error } = newProductSchema.validate(loginBody);
+    const { error } = newUserSchema.validate(loginBody);
     if (error) return { type: 400, message: error.details[0].message };
     const user = await this.user.getUserByUsernameAndPassword(loginBody);
 
@@ -36,8 +39,24 @@ export default class UserService {
     );
   }
 
-  public create(userData: IUser): Promise<IUser> {
-    const newCreatedUser = this.user.create(userData);
+  public async create(userData: IUser) {
+    const newUserSchema = Joi.object({
+      username: Joi.string().required().min(2),
+      classe: Joi.string().required().min(2),
+      level: Joi.number().required().min(1),
+      password: Joi.string().required().min(8),  
+    }).messages({ 
+      'string.base': messageIsString,
+      'string.empty': messageIsRequired,
+      'number.base': '422 | {{#label}} should be a type of \'number\'',
+      'number.empty': '422 | {{#label}} is required',
+      'string.min': '422 | {{#label}} length must be at least {{#limit}} characters long',
+      'number.min': '422 | {{#label}} must be greater than or equal to 1',
+      'any.required': messageIsRequired });
+
+    const { error } = newUserSchema.validate(userData);
+    if (error) throw new Error(error.details[0].message);
+    const newCreatedUser = await this.user.create(userData);
     return newCreatedUser;
   }
 }

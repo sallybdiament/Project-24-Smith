@@ -1,3 +1,6 @@
+import { IUser } from './IUser';
+
 export interface IMessage {
-  message: string,
+  type?: number,
+  message: string | IUser,
 }
