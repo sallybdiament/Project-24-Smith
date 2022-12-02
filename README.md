@@ -15,8 +15,8 @@ Projeto 24 da [Trybe](https://wwww.betrybe.com), módulo de Back-End.
 #### 2. Criação de Rotas POST:
 
 - Cadastrar produtos: endpoint POST `/products`, com validações.
-    - Cadastrar usuários: endpoint POST `/users`, com validações.
-    - Login de usuários: endpoint POST `/login`, com Json Web Token.
+- Cadastrar usuários: endpoint POST `/users`, com validações.
+- Login de usuários: endpoint POST `/login`, com Json Web Token.
 
 ## Instalação 
 
