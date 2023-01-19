@@ -24,11 +24,11 @@ Projeto 24 da [Trybe](https://wwww.betrybe.com), módulo de Back-End.
 
 ```git clone git@github.com:sallybdiament/Project-24-Smith.git```
 
-#### 2 - Subir os containers `blogs_api` e `blogs_api_db` utilizando o docker-compose
+#### 2 - Subir os containers `trybesmith` e `trybesmith_db` utilizando o docker-compose
 
 Na raíz do projeto: ```docker-compose up -d```
 
-#### 3 - Abrir o terminal do container `blogs_api`
+#### 3 - Abrir o terminal do container `trybesmith`
 
 ```docker exec -it trybesmith bash```
 
